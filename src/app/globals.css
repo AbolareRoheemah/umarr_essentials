@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/* UMARR palette, taken from the logo and sticker */
+:root {
+  --cream: #faf7f2;
+  --paper: #fffdf9;
+  --navy: #12264a;
+  --navy-soft: #1d3866;
+  --gold: #b8934a;
+  --gold-deep: #86672a; /* gold dark enough for text on cream */
+  --gold-wash: #f1e7d2;
+  --ink: #2e2a22;
+  --ink-soft: #5d574b;
+  --line: #e3d7bd;
+  --danger: #9b2c2c;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-navy: var(--navy);
+  --color-navy-soft: var(--navy-soft);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-wash: var(--gold-wash);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-danger: var(--danger);
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-montserrat), system-ui, sans-serif;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    color: var(--navy);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* The sticker's thin gold rule with a diamond in the middle */
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--gold);
+}
+.rule::before,
+.rule::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to right, transparent, currentColor);
+}
+.rule::after {
+  background: linear-gradient(to left, transparent, currentColor);
+}
+.rule > span {
+  width: 0.7rem;
+  height: 0.7rem;
+  background: currentColor;
+  transform: rotate(45deg) scaleX(0.75);
+}
