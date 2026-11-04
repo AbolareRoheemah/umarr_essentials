@@ -26,7 +26,7 @@ const key = (productId: string, sizeId: string) => `${productId}|${sizeId}`;
 
 const KIND_LABEL: Record<SizeKind, string> = { pouch: "Pouches", jar: "Jars" };
 
-type Done = { order: Order; notified: boolean };
+type Done = { order: Order };
 
 export default function OrderApp() {
   const [qty, setQty] = useState<Record<string, number>>({});
@@ -74,7 +74,7 @@ export default function OrderApp() {
     });
   }
 
-  async function submit(e: React.FormEvent) {
+  function submit(e: React.FormEvent) {
     e.preventDefault();
     if (sending) return;
 
@@ -101,27 +101,24 @@ export default function OrderApp() {
 
     setErrors({});
     setSending(true);
-    let notified = false;
-    try {
-      const res = await fetch("/api/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...result.order, website }),
-        signal: AbortSignal.timeout(7000),
-      });
-      const data = await res.json();
-      notified = res.ok && data?.notified === true;
-    } catch {
-      notified = false; // the WhatsApp message still carries the order
-    }
-    setSending(false);
-    setDone({ order: result.order, notified });
+  
+    // Telegram alert for the owner. Runs in the background; if it fails,
+    // the WhatsApp message still carries the order.
+    fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...result.order, website }),
+      keepalive: true,
+    }).catch(() => {});
+  
+    setDone({ order: result.order });
     requestAnimationFrame(() =>
       document.getElementById("order")?.scrollIntoView({ block: "start" }),
     );
   }
 
   function startOver() {
+    setSending(false);
     setDone(null);
     setQty({});
     setNotes("");
@@ -250,7 +247,6 @@ export default function OrderApp() {
           {done ? (
             <OrderConfirmation
               order={done.order}
-              notified={done.notified}
               onStartOver={startOver}
             />
           ) : (
@@ -277,7 +273,7 @@ export default function OrderApp() {
                           <button
                             type="button"
                             onClick={() => remove(l)}
-                            className="min-h-11 px-2 text-sm text-gold-deep underline underline-offset-4"
+                            className="min-h-11 px-2 text-sm text-gold-deep underline underline-offset-4 cursor-pointer"
                             aria-label={`Remove ${lineLabel(l)} from order`}
                           >
                             Remove
@@ -432,7 +428,7 @@ export default function OrderApp() {
                   {sending ? "Sending…" : "Send order"}
                 </button>
                 <p className="-mt-2 text-sm text-ink-soft">
-                We&apos;ll confirm your order on WhatsApp. You pay only after we confirm.
+                Next you'll see a summary of your order, then send it to us on WhatsApp. You pay only after we confirm.
                 </p>
               </div>
             </form>

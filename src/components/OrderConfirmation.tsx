@@ -15,19 +15,17 @@ import {
 
 type Props = {
   order: Order;
-  // true when the order alert reached UMARR; false when it did not, in which
-  // case the customer must send the order on WhatsApp for it to count.
-  notified: boolean;
   onStartOver: () => void;
 };
 
 const NEXT_STEPS = [
-  "We message you on WhatsApp to confirm what's ready. You can also message us on WhatsApp using the link below if you don't want to wait.",
+  "Tap Send order, then press send on WhatsApp so your order reaches us.",
+  "We reply on WhatsApp to confirm what's ready now and when the rest will be.",
   "You pay by bank transfer once we've confirmed, then send us your receipt.",
   "We book your rider, your own rider collects, or you pick up.",
 ];
 
-export default function OrderConfirmation({ order, notified, onStartOver }: Props) {
+export default function OrderConfirmation({ order, onStartOver }: Props) {
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     heading.current?.focus();
@@ -44,6 +42,17 @@ export default function OrderConfirmation({ order, notified, onStartOver }: Prop
         ? "Your rider collects from us, so there's no delivery fee from us."
         : "Pickup, so there's no delivery fee.";
 
+  const sendButton = (
+    <a
+      href={chatHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block rounded-md bg-navy px-7 py-4 font-semibold text-cream transition-colors hover:bg-navy-soft"
+    >
+      Send order
+    </a>
+  );
+
   return (
     <div className="rounded-md border border-line bg-paper p-6 sm:p-8">
       <div className="text-center">
@@ -53,10 +62,10 @@ export default function OrderConfirmation({ order, notified, onStartOver }: Prop
         >
           <svg width="26" height="26" viewBox="0 0 26 26">
             <path
-              d="m5 13.5 5.5 5.5L21 8"
+              d="M3.5 12.5 22 4l-5.5 18-4-7.5z M12.5 14.5 22 4"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2.4"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -67,38 +76,15 @@ export default function OrderConfirmation({ order, notified, onStartOver }: Prop
           tabIndex={-1}
           className="mt-4 text-4xl outline-none sm:text-5xl"
         >
-          {notified ? `Thank you, ${firstName}` : "One more step"}
+          Almost done, {firstName}
         </h2>
         <p className="mt-2 font-semibold tracking-wide text-gold-deep">
           Order {order.code}
         </p>
         <p className="mx-auto mt-4 max-w-md text-ink-soft">
-          {notified ? (
-            <>
-              We&apos;ve received your order and will confirm it on WhatsApp at{" "}
-              <span className="whitespace-nowrap font-semibold text-ink">
-                {order.phone}
-              </span>
-              . You pay only after we confirm.
-            </>
-          ) : (
-            <>
-              Your order isn&apos;t with us yet. Tap the button below and press send
-              in WhatsApp so we get it. We&apos;ll confirm it there, and you pay only
-              after that.
-            </>
-          )}
+          Here&apos;s what you picked. Tap the button to send it to us on WhatsApp,
+          and we&apos;ll confirm it there. You pay only after we confirm.
         </p>
-        {!notified && (
-          <a
-            href={chatHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-block rounded-md bg-navy px-7 py-4 font-semibold text-cream transition-colors hover:bg-navy-soft"
-          >
-            Send order on WhatsApp
-          </a>
-        )}
       </div>
 
       {/* Breakdown */}
@@ -134,6 +120,12 @@ export default function OrderConfirmation({ order, notified, onStartOver }: Prop
         </span>
       </div>
       <p className="mt-1 text-sm text-ink-soft">{deliveryNote}</p>
+        <div className="flex flex-col justify-center items-center">
+          <div className="mt-6">{sendButton}</div>
+          <p className="mt-3 text-sm text-ink-soft">
+            Your order reaches us once you press send in WhatsApp.
+          </p>
+        </div>
 
       {/* Details */}
       <h3 className="mt-10 text-2xl">Your details</h3>
@@ -169,26 +161,17 @@ export default function OrderConfirmation({ order, notified, onStartOver }: Prop
         ))}
       </ol>
 
-      <div className="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-line pt-6">
-        {notified ? (
-          <a
-            href={chatHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-semibold text-navy underline decoration-gold decoration-2 underline-offset-4"
+      <div className="mt-10 border-t border-line pt-8 text-center">
+        {sendButton}
+        <div className="mt-5">
+          <button
+            type="button"
+            onClick={onStartOver}
+            className="min-h-11 cursor-pointer text-sm font-medium text-gold-deep underline underline-offset-4"
           >
-            Message us on WhatsApp
-          </a>
-        ) : (
-          <span />
-        )}
-        <button
-          type="button"
-          onClick={onStartOver}
-          className="min-h-11 cursor-pointer text-sm font-medium text-gold-deep underline underline-offset-4"
-        >
-          Start a new order
-        </button>
+            Start a new order
+          </button>
+        </div>
       </div>
     </div>
   );

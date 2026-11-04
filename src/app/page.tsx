@@ -9,10 +9,10 @@ const from = (id: string) => `From ${formatNaira(lowestPrice(product(id)))}`;
 
 const SLIDES: Slide[] = [
   {
-    src: "/photos/plantain-chips.webp",
-    alt: "Golden plantain chips in a gold UMARR pouch and a red-lid jar",
-    title: "Plantain chips",
-    note: from("plantain-chips"),
+    src: "/photos/plantain-ranges.jpg",
+    alt: "Plantain chips in two gold pouches",
+    title: "Plantain chips in pouches",
+    note: "Pouches for a treat",
   },
   {
     src: "/photos/chin-chin-jars.webp",
@@ -27,10 +27,10 @@ const SLIDES: Slide[] = [
     note: "Pouches for a treat, jars for sharing",
   },
   {
-    src: "/photos/plantain-ranges.jpg",
-    alt: "Plantain chips in two gold pouches",
-    title: "Plantain chips in pouches",
-    note: "Pouches for a treat",
+    src: "/photos/plantain-chips.webp",
+    alt: "Golden plantain chips in a gold UMARR pouch and a red-lid jar",
+    title: "Plantain chips",
+    note: from("plantain-chips"),
   },
   {
     src: "/photos/coconut1.jpg",
@@ -55,11 +55,11 @@ const STEPS = [
   },
   {
     title: "Send your order",
-    body: "Check the summary of what you picked and the price, then send it to us",
+    body: "Check your order summary, then tap Send order on WhatsApp. Your order is already written, so just press send",
   },
   {
     title: "We confirm on WhatsApp",
-    body: "We tell you what&apos;s ready now, what needs a little time, and when you&apos;ll get it.",
+    body: "We tell you what's ready now, what needs a little time, and when you'll get it.",
   },
   {
     title: "Pay by bank transfer",

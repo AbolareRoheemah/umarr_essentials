@@ -75,7 +75,7 @@ export const PRODUCTS: Product[] = [
     },
     sizes: [
       { sizeId: "mini-pouch", price: 1200 },
-      { sizeId: "midi-pouch", price: 2000 },
+      { sizeId: "midi-pouch", price: 2200 },
       { sizeId: "regular-jar", price: 5500, detail: "500g" },
     ],
   },
