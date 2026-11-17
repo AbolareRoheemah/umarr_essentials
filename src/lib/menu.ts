@@ -61,7 +61,7 @@ export const PRODUCTS: Product[] = [
     sizes: [
       { sizeId: "mini-pouch", price: 1000 },
       { sizeId: "midi-pouch", price: 2000 },
-      { sizeId: "regular-jar", price: 4500, detail: "1L" },
+      { sizeId: "regular-jar", price: 4000, detail: "1L" },
       { sizeId: "jumbo-jar", price: 5500, detail: "1.5L" },
     ],
   },
@@ -74,9 +74,10 @@ export const PRODUCTS: Product[] = [
       alt: "Plantain chips in a gold UMARR pouch and a red-lid jar",
     },
     sizes: [
-      { sizeId: "mini-pouch", price: 1200 },
-      { sizeId: "midi-pouch", price: 2200 },
-      { sizeId: "regular-jar", price: 5500, detail: "500g" },
+      { sizeId: "mini-pouch", price: 1000 },
+      { sizeId: "midi-pouch", price: 2000 },
+      { sizeId: "regular-jar", price: 5500, detail: "1L" },
+      { sizeId: "jumbo-jar", price: 6000, detail: "1.5L" },
     ],
   },
   {
@@ -111,6 +112,10 @@ export const PRODUCTS: Product[] = [
     id: "coconut-candy",
     name: "Coconut candy",
     description: "Sweet, chewy coconut candy.",
+    photo: {
+      src: "/photos/coco_candy.png",
+      alt: "Sweet, chewy coconut candy in a gold UMARR pouch",
+    },
     sizes: [
       { sizeId: "mini-pouch", price: 1500 },
       { sizeId: "midi-pouch", price: 3000 },

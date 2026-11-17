@@ -44,6 +44,12 @@ const SLIDES: Slide[] = [
     title: "Unsweetened coconut flakes",
     note: "Use for yoghurt, smoothies, baking, or just as a snack",
   },
+  {
+    src: "/photos/coco_candy.png",
+    alt: "Sweet, chewy coconut candy in a gold UMARR pouch",
+    title: "Coconut candy",
+    note: "Sweet, chewy coconut candy.",
+  },
 ];
 
 const CHEAPEST = Math.min(...PRODUCTS.map(lowestPrice));
